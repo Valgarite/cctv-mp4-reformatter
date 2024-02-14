@@ -1,15 +1,14 @@
 import os
 import cv2
-import pandas as pd
 
 from text_processing import NO_DATE, processOCR
 
 def read_video(video: cv2.VideoCapture)->str:
-    video.set(cv2.CAP_PROP_FPS, 1)
+    print("fps:", video.get(cv2.CAP_PROP_FPS))
     frame_list = slice_frames(video=video, quant=10)
     success, image = video.read()
     scan_result = NO_DATE
-    found_cam = 'other_cam'
+    found_cam = 'XX'
     certainties = {'date': 0, 'time': 0}
     while(success):
         try:
@@ -20,6 +19,7 @@ def read_video(video: cv2.VideoCapture)->str:
             each_frame = int(each_frame)
             video.set(cv2.CAP_PROP_POS_FRAMES, each_frame)
             success, image = video.read()
+            cv2.resize(image, (1280, 720))
             imgURL = f'temp/{each_frame}.jpg'
             each_frame = str(each_frame)
             print(imgURL)
@@ -45,6 +45,7 @@ def read_video(video: cv2.VideoCapture)->str:
 
 def slice_frames(video: cv2.VideoCapture, quant: int = 30):
     videoLength = video.get(cv2.CAP_PROP_FRAME_COUNT)
+    print('videoLength:', videoLength)
     frames = []
     i=0
     while i<quant:
