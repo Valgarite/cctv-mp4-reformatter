@@ -17,6 +17,4 @@ def search_loop(root_folder_url: str):
                 vid_scan_result = read_video(video)
                 
                 print("mover")
-                target_folder = vid_scan_result[1][0]
-                mover_video()
-                
+                mover_video(ruta_completa, vid_scan_result, vid_scan_result)

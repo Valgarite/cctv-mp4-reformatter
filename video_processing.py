@@ -2,13 +2,13 @@ import os
 import cv2
 import pandas as pd
 
-from text_processing import processOCR
+from text_processing import NO_DATE, processOCR
 
-def read_video(video: cv2.VideoCapture):
+def read_video(video: cv2.VideoCapture)->str:
     video.set(cv2.CAP_PROP_FPS, 1)
-    frame_list = slice_frames(video=video, quant=30)
+    frame_list = slice_frames(video=video, quant=20)
     success, image = video.read()
-    scan_result = "no-data"
+    scan_result = NO_DATE
     while(success):
         try:
             os.mkdir('temp')
