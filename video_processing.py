@@ -6,7 +6,7 @@ from text_processing import NO_DATE, processOCR
 
 def read_video(video: cv2.VideoCapture)->str:
     video.set(cv2.CAP_PROP_FPS, 1)
-    frame_list = slice_frames(video=video, quant=20)
+    frame_list = slice_frames(video=video, quant=10)
     success, image = video.read()
     scan_result = NO_DATE
     found_cam = 'other_cam'
@@ -50,4 +50,5 @@ def slice_frames(video: cv2.VideoCapture, quant: int = 30):
     while i<quant:
         frames.append(int(videoLength/quant * i))
         i+=1
+    frames[0] = 360
     return frames
